@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ورود و تایید شماره - مدرن و سه بعدی</title>
+  <title>نوروکیس ای آی - ریمکس</title>
 
+  <!-- فونت Rubik به جای Vazirmatn -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --orange-accent: #ff6b00;
-      --orange-glow: rgba(255, 107, 0, 0.45);
+      --orange-accent: #a855f7;
+      --orange-glow: rgba(168, 85, 247, 0.4);
       --white-primary: #ffffff;
-      --white-glow: rgba(255, 255, 255, 0.2);
       --bg-color: #000000;
+      --glass-bg: rgba(22, 22, 25, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.12);
       --text-main: #ffffff;
-      --text-muted: #9a9a9e;
+      --text-muted: #98989f;
     }
 
     * {
@@ -26,8 +28,6 @@
       padding: 0;
       font-family: 'Rubik', sans-serif;
       -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
       user-select: none;
       -webkit-touch-callout: none;
       -webkit-tap-highlight-color: transparent;
@@ -43,15 +43,27 @@
       color: var(--text-main);
     }
 
-    @keyframes slideUpFade {
-      0% {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    body::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(168,85,247,0.18) 0%, rgba(0,0,0,0) 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes scaleIn {
+      0% { opacity: 0; transform: scale(0.96) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .mobile-screen {
@@ -63,9 +75,9 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 16px;
+      padding: 24px 20px;
       position: relative;
-      background-color: var(--bg-color);
+      z-index: 1;
     }
 
     .screen {
@@ -74,6 +86,7 @@
       justify-content: space-between;
       height: 100%;
       width: 100%;
+      animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .screen.active {
@@ -86,47 +99,271 @@
       align-items: center;
       text-align: center;
       width: 100%;
-      padding-top: 8px;
+      padding-top: 10px;
     }
 
-    .icon-container {
-      position: relative;
+    .icon-wrapper {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 12px 24px rgba(255, 255, 255, 0.15));
+    }
+
+    .icon-wrapper svg {
+      width: 100%;
+      height: 100%;
+      stroke: #ffffff;
+    }
+
+    .remix-title {
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .highlight {
+      color: #a855f7;
+      background: rgba(168, 85, 247, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 2px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      display: inline-block;
+    }
+
+    .remix-subtitle {
+      color: #8e8e93;
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 32px;
+    }
+
+    .btn-start {
+      width: 100%;
+      height: 56px;
+      background-color: #ffffff;
+      color: #000000;
+      border: none;
+      border-radius: 18px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      outline: none;
+    }
+
+    .btn-start:hover {
+      background-color: #f2f2f2;
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .logo-box {
+      width: 100px;
+      height: 100px;
+      background: rgba(30, 30, 35, 0.6);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       margin-bottom: 20px;
-      animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    .logo-box svg {
+      width: 48px;
+      height: 48px;
+      stroke: #ffffff;
+      filter: drop-shadow(0 2px 6px rgba(255,255,255,0.25));
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      font-weight: 400;
+    }
+
+    .auth-options-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .auth-card {
+      width: 100%;
+      height: 60px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 18px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .auth-card:active {
+      transform: scale(0.97);
+      border-color: var(--orange-accent);
+      background: rgba(35, 35, 42, 0.85);
+      box-shadow: 0 4px 15px var(--orange-glow);
+    }
+
+    .auth-card-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .auth-icon {
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #ffffff;
+      fill: none;
+    }
+
+    .auth-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .active-badge {
+      background: rgba(168, 85, 247, 0.15);
+      color: var(--orange-accent);
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-weight: 600;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .divider-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 10px 0 16px 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .divider-text {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .primary-phone-btn {
+      width: 100%;
+      height: 60px;
+      background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 18px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 30px var(--orange-glow);
+      transition: all 0.2s ease;
+    }
+
+    .primary-phone-btn:active {
+      transform: scale(0.97);
+    }
+
+    .terms-text {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .terms-text span {
+      color: var(--orange-accent);
+      font-weight: 600;
+      cursor: pointer;
     }
 
     .phone-outline {
-      width: 82px;
-      height: 124px;
-      border: 3.5px solid var(--white-primary);
+      width: 90px;
+      height: 125px;
+      border: 3px solid rgba(255,255,255,0.7);
       border-radius: 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
       padding: 8px 0;
-      box-shadow: 
-        0 8px 25px rgba(0,0,0,0.8),
-        0 0 25px var(--white-glow);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
     }
 
     .phone-top-bar {
       width: 24px;
-      height: 4px;
-      background-color: var(--white-primary);
+      height: 3px;
+      background-color: rgba(255,255,255,0.7);
       border-radius: 2px;
     }
 
     .phone-bottom-bar {
-      width: 26px;
-      height: 4px;
+      width: 28px;
+      height: 3px;
       background-color: var(--orange-accent);
       border-radius: 2px;
+      box-shadow: 0 0 8px var(--orange-glow);
     }
 
     .badge-plus {
       position: absolute;
-      top: 10px;
+      top: 8px;
       right: -12px;
       background-color: var(--orange-accent);
       color: #ffffff;
@@ -137,29 +374,24 @@
       justify-content: center;
       align-items: center;
       font-weight: 700;
-      font-size: 17px;
-      border: 3px solid var(--bg-color);
-      box-shadow: 0 4px 14px var(--orange-glow);
+      font-size: 16px;
+      border: 2px solid var(--bg-color);
+      box-shadow: 0 4px 12px var(--orange-glow);
     }
 
     .title {
       font-size: 20px;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 4px;
-      opacity: 0;
-      animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.06s forwards;
+      margin-bottom: 6px;
     }
 
     .subtitle {
       color: var(--text-muted);
-      font-size: 11.5px;
-      line-height: 1.4;
-      padding: 0 16px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      padding: 0 10px;
       margin-bottom: 24px;
-      font-weight: 400;
-      opacity: 0;
-      animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
     }
 
     .inputs-wrapper {
@@ -167,123 +399,111 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
-      opacity: 0;
-      animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.14s forwards;
     }
 
-    .country-3d-card {
+    .custom-input-card {
       width: 100%;
-      height: 58px;
-      background: linear-gradient(145deg, #18191d 0%, #0c0d0f 100%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
+      height: 60px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 18px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 0 10px;
+      padding: 0 18px;
       position: relative;
-      cursor: pointer;
-      box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.8),
-        0 2px 4px rgba(0, 0, 0, 0.9),
-        inset 0 1px 1.5px rgba(255, 255, 255, 0.25),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.8);
-      transition: all 0.2s ease;
+      direction: ltr;
+      transition: all 0.25s ease;
     }
 
-    .country-label {
+    .custom-input-card:focus-within {
+      border-color: var(--orange-accent);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
+      background: rgba(30, 30, 38, 0.85);
+    }
+
+    .custom-input-label {
       position: absolute;
-      top: -9px;
+      top: -10px;
       right: 18px;
-      background: var(--bg-color);
+      background: #111114;
       padding: 0 8px;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
       color: var(--orange-accent);
       border-radius: 6px;
+      direction: rtl;
     }
 
-    .country-inner-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(145deg, #252730 0%, #131418 100%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 6px 12px;
-      border-radius: 14px;
-      box-shadow: 
-        0 4px 10px rgba(0, 0, 0, 0.5),
-        inset 0 1px 1px rgba(255, 255, 255, 0.3),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.6);
-    }
-
-    .flag-badge {
-      width: 24px;
-      height: 16px;
-      border-radius: 4px;
-      object-fit: cover;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,255,255,0.25);
-    }
-
-    .country-title {
-      font-size: 13px;
-      font-weight: 700;
+    .custom-input-field {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
       color: var(--text-main);
-      letter-spacing: 0.3px;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: left;
     }
 
-    .country-arrow-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 12px;
-      background: linear-gradient(145deg, #22242c 0%, #101115 100%);
+    .custom-input-field::placeholder {
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .action-btn-main {
+      width: 100%;
+      height: 60px;
+      background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 18px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 30px var(--orange-glow);
+      margin-top: 24px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 10px;
-      color: var(--text-muted);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 
-        0 2px 6px rgba(0, 0, 0, 0.5),
-        inset 0 1px 1px rgba(255, 255, 255, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .action-btn-main:active {
+      transform: scale(0.97);
+    }
+
+    .spinner {
+      width: 22px;
+      height: 22px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
     }
 
     .phone-3d-card {
       width: 100%;
       height: 60px;
-      background: linear-gradient(145deg, #1c1d22 0%, #0d0e11 100%);
-      border: 1.5px solid rgba(255, 255, 255, 0.18);
-      border-radius: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 18px;
       display: flex;
       align-items: center;
-      padding: 0 6px;
+      padding: 0 8px;
       position: relative;
       direction: ltr;
-      box-shadow: 
-        0 10px 25px rgba(0, 0, 0, 0.8),
-        0 2px 6px rgba(0, 0, 0, 0.9),
-        inset 0 1.5px 2px rgba(255, 255, 255, 0.35),
-        inset 0 -4px 10px rgba(0, 0, 0, 0.9);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .phone-3d-card.focused {
-      border-color: var(--orange-accent);
-      box-shadow: 
-        0 12px 28px rgba(0, 0, 0, 0.8),
-        0 0 20px var(--orange-glow),
-        inset 0 1.5px 2px rgba(255, 255, 255, 0.5),
-        inset 0 -3px 8px rgba(255, 107, 0, 0.2);
     }
 
     .phone-label {
       position: absolute;
-      top: -9px;
+      top: -10px;
       right: 18px;
-      background: var(--bg-color);
+      background: #111114;
       padding: 0 8px;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
       color: var(--orange-accent);
       border-radius: 6px;
@@ -291,25 +511,21 @@
     }
 
     .code-pill-3d {
-      background: linear-gradient(145deg, #282932 0%, #131418 100%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      padding: 6px 7px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 6px 10px;
       display: flex;
       align-items: center;
-      gap: 3px;
-      box-shadow: 
-        0 3px 8px rgba(0, 0, 0, 0.6),
-        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      gap: 6px;
       flex-shrink: 0;
-      margin-right: 4px;
+      margin-right: 8px;
     }
 
     .code-text-num {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-main);
-      letter-spacing: 0.3px;
     }
 
     .slots-container {
@@ -318,18 +534,18 @@
       justify-content: space-between;
       width: 100%;
       height: 100%;
-      padding: 0 2px;
+      padding: 0 6px;
     }
 
     .digit-group {
       display: flex;
       align-items: center;
-      gap: 1px;
+      gap: 3px;
     }
 
     .digit-slot {
       position: relative;
-      width: 17px;
+      width: 18px;
       height: 38px;
       display: flex;
       justify-content: center;
@@ -343,7 +559,6 @@
       opacity: 0;
       transform: scale(0.4) translateY(6px);
       transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     .digit-slot.filled .digit-text {
@@ -356,9 +571,8 @@
       bottom: 6px;
       width: 10px;
       height: 3px;
-      background: #000000;
+      background: rgba(255,255,255,0.2);
       border-radius: 10px;
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.9), 0 1px 0 rgba(255,255,255,0.1);
       transition: all 0.25s ease;
     }
 
@@ -368,62 +582,42 @@
     }
 
     .digit-slot.current .slot-base {
-      width: 12px;
-      height: 3px;
+      width: 14px;
       background: var(--white-primary);
-      box-shadow: 0 0 8px var(--white-glow);
-      animation: slotBlink 1s infinite alternate ease-in-out;
+      box-shadow: 0 0 8px rgba(255,255,255,0.4);
     }
 
-    @keyframes slotBlink {
-      0% { opacity: 0.3; transform: scaleX(0.8); }
-      100% { opacity: 1; transform: scaleX(1.2); }
-    }
-
-    /* استایل‌های صفحه کد تایید OTP (۵ رقم) */
     .otp-code-wrapper {
       width: 100%;
       display: flex;
       justify-content: center;
-      gap: 8px;
-      opacity: 0;
-      animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.14s forwards;
+      gap: 12px;
       direction: ltr;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
     }
 
     .otp-slot {
       position: relative;
       width: 54px;
       height: 64px;
-      background: linear-gradient(145deg, #1c1d22 0%, #0d0e11 100%);
-      border: 1.5px solid rgba(255, 255, 255, 0.18);
-      border-radius: 18px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 
-        0 10px 25px rgba(0, 0, 0, 0.9),
-        inset 0 1.5px 2px rgba(255, 255, 255, 0.35),
-        inset 0 -4px 10px rgba(0, 0, 0, 0.9);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.2s ease;
     }
 
     .otp-slot.current {
       border-color: var(--white-primary);
-      box-shadow: 
-        0 12px 28px rgba(0, 0, 0, 0.9),
-        0 0 18px var(--white-glow),
-        inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 20px rgba(255,255,255,0.25);
     }
 
     .otp-slot.filled {
       border-color: var(--orange-accent);
-      box-shadow: 
-        0 12px 28px rgba(0, 0, 0, 0.9),
-        0 0 18px var(--orange-glow),
-        inset 0 1.5px 2px rgba(255, 255, 255, 0.4),
-        inset 0 -3px 8px rgba(255, 107, 0, 0.2);
+      box-shadow: 0 0 20px rgba(168,85,247,0.35);
     }
 
     .otp-text {
@@ -433,7 +627,6 @@
       opacity: 0;
       transform: scale(0.4) translateY(6px);
       transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
     }
 
     .otp-slot.filled .otp-text {
@@ -442,10 +635,8 @@
     }
 
     .resend-container {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--text-muted);
-      opacity: 0;
-      animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards;
     }
 
     .resend-link {
@@ -461,128 +652,369 @@
       opacity: 0.6;
     }
 
-    /* کیپد با چیدمان استاندارد و طبیعی (۱ تا ۹ از بالا به پایین) هنگام اجرا */
     .keypad {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 10px;
       width: 100%;
       margin-top: auto;
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+      margin-bottom: 4px;
     }
 
     .key-button {
-      background: linear-gradient(145deg, #18191e 0%, #08080a 100%);
+      background: rgba(28, 28, 35, 0.75);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      height: 50px;
+      border-radius: 16px;
+      height: 54px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       position: relative;
-      box-shadow: 
-        0 6px 14px rgba(0, 0, 0, 0.8),
-        0 2px 4px rgba(0, 0, 0, 0.9),
-        inset 0 1px 1px rgba(255, 255, 255, 0.35),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
       transition: all 0.12s ease;
+      touch-action: manipulation;
     }
 
-    /* تنظیم گوشه‌های گرد برای حالت استاندارد (۱ و ۳ بالا، ۷ و ۹ پایین) */
-    .key-1-top-left { border-top-right-radius: 26px; border-top-left-radius: 14px; }
-    .key-3-top-right { border-top-left-radius: 26px; border-top-right-radius: 14px; }
-    .key-7-bot-left { border-bottom-right-radius: 26px; border-bottom-left-radius: 14px; }
-    .key-9-bot-right { border-bottom-left-radius: 26px; border-bottom-right-radius: 14px; }
-
     .key-button:active {
-      background: #050507;
+      background: rgba(50, 50, 60, 0.95);
       border-color: var(--orange-accent);
-      transform: translateY(3px) scale(0.97);
-      box-shadow: 
-        0 2px 5px rgba(0, 0, 0, 0.8),
-        inset 0 2px 6px rgba(0, 0, 0, 0.95),
-        inset 0 0 4px rgba(255, 107, 0, 0.3);
+      transform: scale(0.94);
+      box-shadow: 0 2px 10px var(--orange-glow);
     }
 
     .key-number {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 600;
       color: var(--text-main);
       line-height: 1;
     }
 
     .key-letters {
-      font-size: 7.5px;
+      font-size: 8px;
       font-weight: 500;
       color: rgba(255, 255, 255, 0.45);
-      margin-top: 2px;
-      letter-spacing: 0.5px;
+      margin-top: 3px;
+      letter-spacing: 0.6px;
     }
 
     .key-button-next {
-      background: #08080a;
+      background: rgba(28, 28, 35, 0.4);
       border-color: rgba(255, 255, 255, 0.04);
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8);
       cursor: not-allowed;
+      box-shadow: none;
     }
 
     .action-text {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
-      color: #333333;
-      transition: all 0.2s ease;
+      color: #666666;
     }
 
     .key-button-next.active {
-      background: linear-gradient(145deg, #ff7b1a 0%, #c45200 100%);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+      border-color: rgba(255, 255, 255, 0.3);
       cursor: pointer;
-      box-shadow: 
-        0 6px 16px var(--orange-glow),
-        0 2px 4px rgba(0, 0, 0, 0.6),
-        inset 0 1px 2px rgba(255, 255, 255, 0.5),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 22px var(--orange-glow);
     }
 
     .key-button-next.active .action-text {
       color: #ffffff;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-    }
-
-    .key-button-next.active:active {
-      transform: translateY(3px) scale(0.97);
-      box-shadow: 
-        0 2px 6px var(--orange-glow),
-        inset 0 3px 6px rgba(0, 0, 0, 0.6);
     }
 
     .backspace-svg {
-      width: 19px;
-      height: 19px;
+      width: 22px;
+      height: 22px;
       fill: none;
       stroke: var(--text-main);
-      stroke-width: 1.7;
+      stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
-    .key-button:active .backspace-svg {
-      stroke: var(--orange-accent);
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 420px;
+      max-height: 80vh;
+      background: rgba(20, 20, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 12px;
+    }
+
+    .modal-header h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #ffffff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.2s;
+      outline: none;
+    }
+
+    .close-btn:hover {
+      background: rgba(168, 85, 247, 0.4);
+    }
+
+    .modal-body {
+      overflow-y: auto;
+      text-align: right;
+      font-size: 13px;
+      color: #c7c7cc;
+      line-height: 1.8;
+      padding-left: 6px;
+    }
+
+    .modal-body::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+
+    .modal-body h3 {
+      font-size: 14px;
+      color: #a855f7;
+      margin: 16px 0 8px 0;
+    }
+
+    .modal-body p {
+      margin-bottom: 10px;
     }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
   <div class="mobile-screen">
     
-    <!-- صفحه اول: ورود شماره موبایل -->
-    <div id="screen-phone" class="screen active">
+    <!-- صفحه اول (ریمکس - خوش‌آمدگویی) -->
+    <div id="screen-remix" class="screen active">
       <div class="top-section">
-        <div class="icon-container">
+        <div class="icon-wrapper">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5" stroke="#ffffff" fill="none">
+            <circle cx="34.52" cy="11.43" r="5.82"></circle>
+            <circle cx="53.63" cy="31.6" r="5.82"></circle>
+            <circle cx="34.52" cy="50.57" r="5.82"></circle>
+            <circle cx="15.16" cy="42.03" r="5.82"></circle>
+            <circle cx="15.16" cy="19.27" r="5.82"></circle>
+            <circle cx="34.51" cy="29.27" r="4.7"></circle>
+            <line x1="20.17" y1="16.3" x2="28.9" y2="12.93"></line>
+            <line x1="38.6" y1="15.59" x2="49.48" y2="27.52"></line>
+            <line x1="50.07" y1="36.2" x2="38.67" y2="46.49"></line>
+            <line x1="18.36" y1="24.13" x2="30.91" y2="46.01"></line>
+            <line x1="20.31" y1="44.74" x2="28.7" y2="48.63"></line>
+            <line x1="17.34" y1="36.63" x2="31.37" y2="16.32"></line>
+            <line x1="20.52" y1="21.55" x2="30.34" y2="27.1"></line>
+            <line x1="39.22" y1="29.8" x2="47.81" y2="30.45"></line>
+            <line x1="34.51" y1="33.98" x2="34.52" y2="44.74"></line>
+          </svg>
+        </div>
+
+        <h1 class="remix-title">
+          به دستیار هوشمند<br>
+          <span class="highlight">ریمکس</span> خوش آمدید
+        </h1>
+
+        <p class="remix-subtitle">دستیار همه‌کاره برای کارهای روزمره‌ات</p>
+
+        <button class="btn-start" onclick="goToWelcomeScreen()">
+          شروع کنید &larr;
+        </button>
+      </div>
+
+      <div class="terms-text">
+        با ادامه دادن، <span onclick="openModal()">شرایط استفاده و قوانین حریم خصوصی</span> را می‌پذیری.
+      </div>
+    </div>
+
+    <!-- صفحه دوم (انتخاب روش ورود) -->
+    <div id="screen-welcome" class="screen">
+      <div class="top-section">
+        <div class="logo-box">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="9" r="3" stroke="#ffffff" stroke-width="1.6"></circle>
+            <path d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"></path>
+            <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"></path>
+          </svg>
+        </div>
+
+        <h1 class="brand-title">نوروکیس ای آی</h1>
+        <p class="brand-subtitle">هوش مصنوعی پیشرفته برای مدیریت کارهای شما</p>
+
+        <div class="auth-options-container">
+          <div class="auth-card" onclick="goToGoogleScreen()">
+            <div class="auth-card-right">
+              <span class="auth-icon">
+                <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                  <path stroke="#ffffff" stroke-width="2.8" stroke-miterlimit="10" d="M13.39,12.15V38.54H7.06A2.56,2.56,0,0,1,4.5,36V16.82"></path>
+                  <path stroke="#ffffff" stroke-width="2.8" stroke-miterlimit="10" d="M34.61,12.15V38.54h6.33A2.56,2.56,0,0,0,43.5,36V16.82"></path>
+                  <path stroke="#ffffff" stroke-width="2.8" stroke-miterlimit="10" d="M24,31.45,43.5,17V13.4a3.94,3.94,0,0,0-6.28-3.16L24,20.06,10.78,10.24A3.94,3.94,0,0,0,4.5,13.4V17Z"></path>
+                </svg>
+              </span>
+              <span class="auth-label">ورود با گوگل</span>
+            </div>
+            <span class="active-badge">اختصاصی</span>
+          </div>
+
+          <div class="auth-card" onclick="goToEmailScreen()">
+            <div class="auth-card-right">
+              <span class="auth-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="3" y="5" width="18" height="14" rx="2" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="auth-label">ورود با ایمیل</span>
+            </div>
+            <span class="active-badge">حرفه‌ای</span>
+          </div>
+        </div>
+
+        <div class="divider-container">
+          <div class="divider-line"></div>
+          <span class="divider-text">یا روش سنتی</span>
+          <div class="divider-line"></div>
+        </div>
+
+        <button class="primary-phone-btn" onclick="goToPhoneScreen()">ورود با شماره تلفن</button>
+      </div>
+
+      <div class="terms-text">
+        با ورود به نوروکیس، شما <span onclick="openModal()">قوانین و مقررات</span> را می‌پذیرید.
+      </div>
+    </div>
+
+    <!-- صفحه ایمیل -->
+    <div id="screen-email" class="screen">
+      <div class="top-section">
+        <div class="icon-container" style="position: relative; margin-bottom: 20px;">
+          <div class="phone-outline" style="height: 120px;">
+            <div class="phone-top-bar"></div>
+            <svg style="width: 32px; height: 32px; stroke: var(--orange-accent); fill: none; stroke-width: 2; margin-top: 24px;" viewBox="0 0 24 24">
+              <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="badge-plus">@</div>
+        </div>
+
+        <h1 class="title">ورود با آدرس ایمیل</h1>
+        <p class="subtitle">لطفاً ایمیل معتبر خود را وارد کنید تا کد تایید ارسال شود.</p>
+
+        <div class="inputs-wrapper" style="margin-top: 6px;">
+          <div class="custom-input-card">
+            <span class="custom-input-label">پست الکترونیک (Email)</span>
+            <input type="email" id="emailInput" class="custom-input-field" placeholder="name@example.com" autocomplete="off">
+          </div>
+        </div>
+
+        <button class="action-btn-main" id="emailSubmitBtn" onclick="submitEmail()">
+          <span id="btnText">ادامه با ایمیل</span>
+          <div class="spinner" id="btnSpinner"></div>
+        </button>
+      </div>
+
+      <div class="terms-text" style="margin-bottom: 15px;">
+        کد تایید یکبار مصرف (OTP) به این ایمیل فرستاده خواهد شد.
+      </div>
+    </div>
+
+    <!-- صفحه گوگل -->
+    <div id="screen-google" class="screen">
+      <div class="top-section">
+        <div class="icon-container" style="position: relative; margin-bottom: 20px;">
+          <div class="phone-outline" style="height: 120px;">
+            <div class="phone-top-bar"></div>
+            <svg style="width: 32px; height: 32px; stroke: var(--white-primary); fill: none; stroke-width: 2.2; stroke-miterlimit: 10; margin-top: 24px;" viewBox="0 0 48 48">
+              <path d="M13.39,12.15V38.54H7.06A2.56,2.56,0,0,1,4.5,36V16.82"></path>
+              <path d="M34.61,12.15V38.54h6.33A2.56,2.56,0,0,0,43.5,36V16.82"></path>
+              <path d="M24,31.45,43.5,17V13.4a3.94,3.94,0,0,0-6.28-3.16L24,20.06,10.78,10.24A3.94,3.94,0,0,0,4.5,13.4V17Z"></path>
+            </svg>
+          </div>
+          <div class="badge-plus" style="background-color: #4285F4; box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);">G</div>
+        </div>
+
+        <h1 class="title">اتصال اکانت گوگل</h1>
+        <p class="subtitle">برای همگام‌سازی ابزار هوش مصنوعی، حساب گوگل خود را وارد نمایید.</p>
+
+        <div class="inputs-wrapper" style="margin-top: 6px;">
+          <div class="custom-input-card">
+            <span class="custom-input-label">حساب گوگل (Google Account)</span>
+            <input type="email" id="googleEmailInput" class="custom-input-field" placeholder="username@gmail.com" autocomplete="off">
+          </div>
+        </div>
+
+        <button class="action-btn-main" style="background: linear-gradient(135deg, #4285F4 0%, #1a5abf 100%); box-shadow: 0 10px 30px rgba(66, 133, 244, 0.35);" onclick="submitGoogleAccount()">تأیید و اتصال حساب گوگل</button>
+      </div>
+
+      <div class="terms-text" style="margin-bottom: 15px;">
+        اطلاعات امنیتی شما کاملاً محافظت‌شده باقی می‌ماند.
+      </div>
+    </div>
+
+    <!-- صفحه تلفن -->
+    <div id="screen-phone" class="screen">
+      <div class="top-section">
+        <div class="icon-container" style="position: relative; margin-bottom: 20px;">
           <div class="phone-outline">
             <div class="phone-top-bar"></div>
             <div class="phone-bottom-bar"></div>
@@ -591,44 +1023,27 @@
         </div>
 
         <h1 class="title">شماره تلفن شما</h1>
-        <p class="subtitle">لطفاً شماره تلفن خود را جهت ورود وارد کنید.</p>
+        <p class="subtitle">لطفاً شماره تلفن خود را جهت ورود به حساب کاربری وارد کنید.</p>
 
         <div class="inputs-wrapper">
-          <div class="country-3d-card">
-            <span class="country-label">کشور</span>
-            
-            <div class="country-inner-box">
-              <img class="flag-badge" src="https://flagcdn.com/w40/ir.png" alt="IR Flag">
-              <span class="country-title">ایران</span>
-            </div>
-
-            <div class="country-arrow-btn">▼</div>
-          </div>
-
-          <div class="phone-3d-card focused" id="phone-card">
-            <span class="phone-label">شماره تلفن</span>
-
+          <div class="phone-3d-card" id="phone-card">
+            <span class="phone-label">شماره تلفن همراه</span>
             <div class="code-pill-3d">
-              <img class="flag-badge" src="https://flagcdn.com/w40/ir.png" alt="IR Flag" style="width: 20px; height: 14px;">
+              <img style="width: 18px; height: 13px; border-radius: 2px;" src="https://flagcdn.com/w40/ir.png" alt="IR Flag">
               <span class="code-text-num">+98</span>
             </div>
 
             <div class="slots-container">
-              <!-- گروه اول (۳ رقم) -->
               <div class="digit-group">
                 <div class="digit-slot current"><span class="digit-text"></span><div class="slot-base"></div></div>
                 <div class="digit-slot"><span class="digit-text"></span><div class="slot-base"></div></div>
                 <div class="digit-slot"><span class="digit-text"></span><div class="slot-base"></div></div>
               </div>
-
-              <!-- گروه دوم (۳ رقم) -->
               <div class="digit-group">
                 <div class="digit-slot"><span class="digit-text"></span><div class="slot-base"></div></div>
                 <div class="digit-slot"><span class="digit-text"></span><div class="slot-base"></div></div>
                 <div class="digit-slot"><span class="digit-text"></span><div class="slot-base"></div></div>
               </div>
-
-              <!-- گروه سوم (۴ رقم) -->
               <div class="digit-group">
                 <div class="digit-slot"><span class="digit-text"></span><div class="slot-base"></div></div>
                 <div class="digit-slot"><span class="digit-text"></span><div class="slot-base"></div></div>
@@ -640,25 +1055,24 @@
         </div>
       </div>
 
-      <!-- کیپد شماره‌گیر با چیدمان استاندارد و سر جای اصلی -->
       <div class="keypad">
-        <button class="key-button key-1-top-left" onclick="handlePhoneKey('1')"><span class="key-number">1</span></button>
-        <button class="key-button" onclick="handlePhoneKey('2')"><span class="key-number">2</span><span class="key-letters">ABC</span></button>
-        <button class="key-button key-3-top-right" onclick="handlePhoneKey('3')"><span class="key-number">3</span><span class="key-letters">DEF</span></button>
+        <button class="key-button" onclick="handlePhoneKey('1')" ontouchstart=""><span class="key-number">1</span></button>
+        <button class="key-button" onclick="handlePhoneKey('2')" ontouchstart=""><span class="key-number">2</span><span class="key-letters">ABC</span></button>
+        <button class="key-button" onclick="handlePhoneKey('3')" ontouchstart=""><span class="key-number">3</span><span class="key-letters">DEF</span></button>
 
-        <button class="key-button" onclick="handlePhoneKey('4')"><span class="key-number">4</span><span class="key-letters">GHI</span></button>
-        <button class="key-button" onclick="handlePhoneKey('5')"><span class="key-number">5</span><span class="key-letters">JKL</span></button>
-        <button class="key-button" onclick="handlePhoneKey('6')"><span class="key-number">6</span><span class="key-letters">MNO</span></button>
+        <button class="key-button" onclick="handlePhoneKey('4')" ontouchstart=""><span class="key-number">4</span><span class="key-letters">GHI</span></button>
+        <button class="key-button" onclick="handlePhoneKey('5')" ontouchstart=""><span class="key-number">5</span><span class="key-letters">JKL</span></button>
+        <button class="key-button" onclick="handlePhoneKey('6')" ontouchstart=""><span class="key-number">6</span><span class="key-letters">MNO</span></button>
 
-        <button class="key-button key-7-bot-left" onclick="handlePhoneKey('7')"><span class="key-number">7</span><span class="key-letters">PQRS</span></button>
-        <button class="key-button" onclick="handlePhoneKey('8')"><span class="key-number">8</span><span class="key-letters">TUV</span></button>
-        <button class="key-button key-9-bot-right" onclick="handlePhoneKey('9')"><span class="key-number">9</span><span class="key-letters">WXYZ</span></button>
+        <button class="key-button" onclick="handlePhoneKey('7')" ontouchstart=""><span class="key-number">7</span><span class="key-letters">PQRS</span></button>
+        <button class="key-button" onclick="handlePhoneKey('8')" ontouchstart=""><span class="key-number">8</span><span class="key-letters">TUV</span></button>
+        <button class="key-button" onclick="handlePhoneKey('9')" ontouchstart=""><span class="key-number">9</span><span class="key-letters">WXYZ</span></button>
 
         <button class="key-button key-button-next" id="btn-next-wrapper" onclick="submitNumber()">
           <span class="action-text">بعدی</span>
         </button>
-        <button class="key-button" onclick="handlePhoneKey('0')"><span class="key-number">0</span><span class="key-letters">+</span></button>
-        <button class="key-button" onclick="removePhoneDigit()">
+        <button class="key-button" onclick="handlePhoneKey('0')" ontouchstart=""><span class="key-number">0</span><span class="key-letters">+</span></button>
+        <button class="key-button" onclick="removePhoneDigit()" ontouchstart="">
           <svg class="backspace-svg" viewBox="0 0 24 24">
             <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
             <line x1="18" y1="9" x2="12" y2="15"></line>
@@ -668,13 +1082,13 @@
       </div>
     </div>
 
-    <!-- صفحه دوم: کد تایید ۵ رقمی (OTP) -->
+    <!-- صفحه OTP -->
     <div id="screen-otp" class="screen">
       <div class="top-section">
-        <div class="icon-container">
-          <div class="phone-outline" style="height: 100px;">
+        <div class="icon-container" style="position: relative; margin-bottom: 20px;">
+          <div class="phone-outline" style="height: 110px;">
             <div class="phone-top-bar"></div>
-            <svg style="width: 24px; height: 24px; stroke: var(--orange-accent); fill: none; stroke-width: 2;" viewBox="0 0 24 24">
+            <svg style="width: 26px; height: 26px; stroke: var(--orange-accent); fill: none; stroke-width: 2.2; margin-top: 22px;" viewBox="0 0 24 24">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
@@ -683,8 +1097,8 @@
 
         <h1 class="title">کد تأیید را وارد کنید</h1>
         <p class="subtitle">
-          کد ۵ رقمی ارسال شده به شماره<br>
-          <span id="userPhoneDisplay" style="color: var(--white-primary); font-weight: 600; direction: ltr; display: inline-block;">+98...</span> را وارد نمایید.
+          کد ۵ رقمی ارسال شده به<br>
+          <span id="userTargetDisplay" style="color: var(--white-primary); font-weight: 600; direction: ltr; display: inline-block;">...</span> را وارد نمایید.
         </p>
 
         <div class="otp-code-wrapper">
@@ -701,21 +1115,21 @@
       </div>
 
       <div class="keypad">
-        <button class="key-button key-1-top-left" onclick="handleOtpKey('1')"><span class="key-number">1</span></button>
-        <button class="key-button" onclick="handleOtpKey('2')"><span class="key-number">2</span><span class="key-letters">ABC</span></button>
-        <button class="key-button key-3-top-right" onclick="handleOtpKey('3')"><span class="key-number">3</span><span class="key-letters">DEF</span></button>
+        <button class="key-button" onclick="handleOtpKey('1')" ontouchstart=""><span class="key-number">1</span></button>
+        <button class="key-button" onclick="handleOtpKey('2')" ontouchstart=""><span class="key-number">2</span><span class="key-letters">ABC</span></button>
+        <button class="key-button" onclick="handleOtpKey('3')" ontouchstart=""><span class="key-number">3</span><span class="key-letters">DEF</span></button>
 
-        <button class="key-button" onclick="handleOtpKey('4')"><span class="key-number">4</span><span class="key-letters">GHI</span></button>
-        <button class="key-button" onclick="handleOtpKey('5')"><span class="key-number">5</span><span class="key-letters">JKL</span></button>
-        <button class="key-button" onclick="handleOtpKey('6')"><span class="key-number">6</span><span class="key-letters">MNO</span></button>
+        <button class="key-button" onclick="handleOtpKey('4')" ontouchstart=""><span class="key-number">4</span><span class="key-letters">GHI</span></button>
+        <button class="key-button" onclick="handleOtpKey('5')" ontouchstart=""><span class="key-number">5</span><span class="key-letters">JKL</span></button>
+        <button class="key-button" onclick="handleOtpKey('6')" ontouchstart=""><span class="key-number">6</span><span class="key-letters">MNO</span></button>
 
-        <button class="key-button key-7-bot-left" onclick="handleOtpKey('7')"><span class="key-number">7</span><span class="key-letters">PQRS</span></button>
-        <button class="key-button" onclick="handleOtpKey('8')"><span class="key-number">8</span><span class="key-letters">TUV</span></button>
-        <button class="key-button key-9-bot-right" onclick="handleOtpKey('9')"><span class="key-number">9</span><span class="key-letters">WXYZ</span></button>
+        <button class="key-button" onclick="handleOtpKey('7')" ontouchstart=""><span class="key-number">7</span><span class="key-letters">PQRS</span></button>
+        <button class="key-button" onclick="handleOtpKey('8')" ontouchstart=""><span class="key-number">8</span><span class="key-letters">TUV</span></button>
+        <button class="key-button" onclick="handleOtpKey('9')" ontouchstart=""><span class="key-number">9</span><span class="key-letters">WXYZ</span></button>
 
         <button class="key-button" style="visibility: hidden; border: none; background: transparent; box-shadow: none; cursor: default;"></button>
-        <button class="key-button" onclick="handleOtpKey('0')"><span class="key-number">0</span><span class="key-letters">+</span></button>
-        <button class="key-button" onclick="removeOtpDigit()">
+        <button class="key-button" onclick="handleOtpKey('0')" ontouchstart=""><span class="key-number">0</span><span class="key-letters">+</span></button>
+        <button class="key-button" onclick="removeOtpDigit()" ontouchstart="">
           <svg class="backspace-svg" viewBox="0 0 24 24">
             <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
             <line x1="18" y1="9" x2="12" y2="15"></line>
@@ -727,15 +1141,138 @@
 
   </div>
 
+  <!-- مدال قوانین و حریم خصوصی -->
+  <div class="modal-overlay" id="termsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>قوانین و حریم خصوصی</h2>
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <h3>۱. پذیرش شرایط</h3>
+        <p>استفاده شما از خدمات ریمکس به منزله پذیرش کامل این قوانین است. در صورت عدم موافقت، لطفاً از سرویس استفاده نکنید.</p>
+
+        <h3>۲. حریم خصوصی و امنیت داده‌ها</h3>
+        <p>اطلاعات و گفتگوهای شما به‌صورت رمزنگاری‌شده حفظ می‌شوند. ریمکس تعهد می‌دهد اطلاعات شخصی شما را در اختیار هیچ شخص ثالثی قرار ندهد.</p>
+
+        <h3>۳. استفاده مجاز</h3>
+        <p>کاربران متعهد می‌شوند از این دستیار هوشمند برای تولید محتوای غیرقانونی، مخرب یا ناقض حقوق دیگران استفاده نکنند.</p>
+
+        <h3>۴. بروزرسانی قوانین</h3>
+        <p>ریمکس این حق را برای خود محفوظ می‌دارد که در هر زمان قوانین را به روز کند. تغییرات از طریق همین صفحه اطلاع‌رسانی خواهد شد.</p>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // ============================================================
+    //  بخش ۱: توابع عمومی (مدال، ناوبری بین صفحات)
+    // ============================================================
+
+    function openModal() {
+      document.getElementById('termsModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('termsModal').classList.remove('active');
+    }
+
+    document.getElementById('termsModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    function goToWelcomeScreen() {
+      document.getElementById("screen-remix").classList.remove("active");
+      document.getElementById("screen-welcome").classList.add("active");
+    }
+
+    function goToPhoneScreen() {
+      // ریست کردن شماره تلفن هنگام ورود مجدد به صفحه
+      resetPhoneScreen();
+      document.getElementById("screen-welcome").classList.remove("active");
+      document.getElementById("screen-phone").classList.add("active");
+    }
+
+    function goToEmailScreen() {
+      document.getElementById("screen-welcome").classList.remove("active");
+      document.getElementById("screen-email").classList.add("active");
+    }
+
+    function goToGoogleScreen() {
+      document.getElementById("screen-welcome").classList.remove("active");
+      document.getElementById("screen-google").classList.add("active");
+    }
+
+    // ============================================================
+    //  بخش ۲: ورود با ایمیل
+    // ============================================================
+
+    function submitEmail() {
+      let emailVal = document.getElementById("emailInput").value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailVal || !emailRegex.test(emailVal)) {
+        alert("لطفاً یک آدرس ایمیل معتبر وارد کنید.");
+        return;
+      }
+
+      let btnText = document.getElementById("btnText");
+      let btnSpinner = document.getElementById("btnSpinner");
+      let submitBtn = document.getElementById("emailSubmitBtn");
+
+      btnText.style.display = "none";
+      btnSpinner.style.display = "block";
+      submitBtn.style.pointerEvents = "none";
+
+      setTimeout(() => {
+        btnText.style.display = "block";
+        btnSpinner.style.display = "none";
+        submitBtn.style.pointerEvents = "auto";
+
+        // ریست OTP قبل از ورود به صفحه
+        resetOtpScreen();
+
+        document.getElementById("screen-email").classList.remove("active");
+        document.getElementById("screen-otp").classList.add("active");
+        document.getElementById("userTargetDisplay").innerText = emailVal;
+        startTimer();
+      }, 1000);
+    }
+
+    // ============================================================
+    //  بخش ۳: ورود با گوگل
+    // ============================================================
+
+    function submitGoogleAccount() {
+      let gEmailVal = document.getElementById("googleEmailInput").value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!gEmailVal || !emailRegex.test(gEmailVal)) {
+        alert("لطفاً یک حساب گوگل معتبر وارد کنید.");
+        return;
+      }
+      alert("حساب گوگل با موفقیت متصل شد: " + gEmailVal);
+    }
+
+    // ============================================================
+    //  بخش ۴: ورود با شماره تلفن (صفحه Phone)
+    // ============================================================
+
     let currentNumber = "";
-    const phoneSlots = document.querySelectorAll(".digit-slot");
+    const phoneSlots = document.querySelectorAll("#screen-phone .digit-slot");
     const nextBtnWrapper = document.getElementById("btn-next-wrapper");
+
+    function resetPhoneScreen() {
+      currentNumber = "";
+      renderPhoneDisplay();
+      // اطمینان از غیرفعال بودن دکمه بعدی
+      nextBtnWrapper.classList.remove("active");
+    }
 
     function renderPhoneDisplay() {
       phoneSlots.forEach((slot, index) => {
         const textSpan = slot.querySelector(".digit-text");
-        
         if (index < currentNumber.length) {
           textSpan.innerText = currentNumber[index];
           slot.classList.add("filled");
@@ -761,10 +1298,7 @@
     }
 
     function handlePhoneKey(digit) {
-      if (currentNumber.length === 0 && digit === '0') {
-        return;
-      }
-
+      if (currentNumber.length === 0 && digit === '0') return;
       if (currentNumber.length < 10) {
         currentNumber += digit;
         renderPhoneDisplay();
@@ -780,26 +1314,48 @@
 
     function submitNumber() {
       if (currentNumber.length === 10) {
+        // ریست OTP قبل از ورود
+        resetOtpScreen();
+
         document.getElementById("screen-phone").classList.remove("active");
         document.getElementById("screen-otp").classList.add("active");
 
+        // فرمت صحیح شماره: فقط ۱۰ رقم بدون صفر اضافی
         let fullPhoneNum = "0" + currentNumber;
         let formattedPhone = "+98 " + fullPhoneNum.slice(0, 3) + " " + fullPhoneNum.slice(3, 6) + " " + fullPhoneNum.slice(6, 10);
-        document.getElementById("userPhoneDisplay").innerText = formattedPhone;
+        document.getElementById("userTargetDisplay").innerText = formattedPhone;
 
         startTimer();
       }
     }
 
+    // ============================================================
+    //  بخش ۵: صفحه OTP (کد تأیید)
+    // ============================================================
+
     let otpCode = "";
-    const otpSlots = document.querySelectorAll(".otp- سرور");
-    const otpSlotsList = document.querySelectorAll(".otp-slot");
+    const otpSlotsList = document.querySelectorAll("#screen-otp .otp-slot");
     let countdownTimer = null;
+    let timerRunning = false;
+
+    function resetOtpScreen() {
+      otpCode = "";
+      renderOtpDisplay();
+      // پاک کردن تایمر قبلی
+      if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+      timerRunning = false;
+      const timerElement = document.getElementById("timerText");
+      timerElement.innerText = "۵۹ ثانیه";
+      timerElement.classList.add("disabled");
+      timerElement.onclick = null;
+    }
 
     function renderOtpDisplay() {
       otpSlotsList.forEach((slot, index) => {
         const textSpan = slot.querySelector(".otp-text");
-        
         if (index < otpCode.length) {
           textSpan.innerText = otpCode[index];
           slot.classList.add("filled");
@@ -819,7 +1375,8 @@
 
       if (otpCode.length === 5) {
         setTimeout(() => {
-          alert("کد تأیید کامل شد: " + otpCode);
+          alert("✅ تایید هویت موفقیت‌آمیز بود! ورود به سیستم...");
+          // در اینجا می‌توانید به صفحه اصلی بروید
         }, 200);
       }
     }
@@ -838,28 +1395,56 @@
       }
     }
 
+    // ============================================================
+    //  بخش ۶: تایمر OTP
+    // ============================================================
+
     function startTimer() {
       let timeLeft = 59;
       const timerElement = document.getElementById("timerText");
+
+      // جلوگیری از تداخل تایمرهای قبلی
+      if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+
+      timerElement.innerText = timeLeft + " ثانیه";
       timerElement.classList.add("disabled");
-      
-      if (countdownTimer) clearInterval(countdownTimer);
+      timerElement.onclick = null;
+      timerRunning = true;
 
       countdownTimer = setInterval(() => {
         timeLeft--;
         timerElement.innerText = timeLeft + " ثانیه";
-        
+
         if (timeLeft <= 0) {
           clearInterval(countdownTimer);
+          countdownTimer = null;
+          timerRunning = false;
           timerElement.innerText = "ارسال مجدد کد";
           timerElement.classList.remove("disabled");
           timerElement.onclick = function() {
-            alert("کد جدید مجدداً ارسال شد!");
-            startTimer();
+            if (!timerRunning) {
+              alert("📨 کد جدید مجدداً ارسال شد!");
+              resetOtpScreen();
+              startTimer();
+            }
           };
         }
       }, 1000);
     }
+
+    // ============================================================
+    //  بخش ۷: امنیت (غیرفعال‌سازی کلیک راست و کلیدهای میانبر)
+    // ============================================================
+
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+      }
+    });
   </script>
 </body>
 </html>
